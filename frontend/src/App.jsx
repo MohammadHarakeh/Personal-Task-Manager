@@ -3,10 +3,9 @@ import { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
-  console.log("Component rendered");
   const testApi = async () => {
     try {
-      const response = await fetch("http://localhost:4000/api/test", {
+      const response = await fetch("http://localhost:4000/auth/register", {
         method: "GET",
       });
 
