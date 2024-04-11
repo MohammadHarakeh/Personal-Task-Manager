@@ -1,16 +1,19 @@
-// middleware/authMiddleware.js
-
 const jwt = require("jsonwebtoken");
-function verifyToken(req, res, next) {
-  const token = req.header("Authorization");
-  if (!token) return res.status(401).json({ error: "Access denied" });
+const { User } = require("../models/user.model");
+const authMiddleware = async (req, res, next) => {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    req.userId = decoded.userId;
-    next();
-  } catch (error) {
-    res.status(401).json({ error: "Invalid token" });
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) return res.status(401).send("Unauthenticated");
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const user = await User.findOne({ _id: decoded._id });
+    if (decoded) {
+      req.user = user;
+      next();
+    }
+  } catch (e) {
+    console.log("Internal server error: ", e);
+    return res.status(500).send("Internal server error.");
   }
-}
+};
 
-module.exports = verifyToken;
+module.exports = authMiddleware;
