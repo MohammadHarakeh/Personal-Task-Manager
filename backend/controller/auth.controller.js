@@ -11,17 +11,14 @@ const register = async (req, res) => {
         .status(400)
         .json({ error: "Username and password are required" });
     }
-
     if (typeof password !== "string") {
       return res.status(400).json({ error: "Password must be a string" });
     }
-
     if (password.length < 8) {
       return res
         .status(400)
         .json({ error: "Password must be at least 8 characters long" });
     }
-
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ username, password: hashedPassword });
     await user.save();
