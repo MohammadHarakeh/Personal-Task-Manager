@@ -1,30 +1,17 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import "./App.css";
+import Authentication from "./componenets/Authentication/Authentication";
+import "./index.css";
 
 function App() {
-  const testApi = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/auth/register", {
-        method: "GET",
-      });
-
-      if (!response.ok) {
-        console.log("error status: ", response.status);
-      }
-
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.log("Error: ", error);
-    }
-  };
-
-  useEffect(() => {
-    testApi();
-  }, []);
-
-  return <div>test</div>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Authentication />}></Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

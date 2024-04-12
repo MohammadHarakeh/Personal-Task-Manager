@@ -1,0 +1,96 @@
+.form-wrapper {
+  background-image: radial-gradient(
+    circle farthest-corner at 10% 20%,
+    rgba(147, 230, 241, 1) 0%,
+    rgba(145, 192, 241, 1) 45.5%
+  );
+  width: 100%;
+  height: 100vh;
+}
+
+.form-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: auto;
+  padding: 5%;
+  width: 30%;
+  background-color: #191919;
+  border-radius: 15px;
+  color: #fff;
+}
+
+.form-title {
+  display: flex;
+  justify-content: center;
+  font-size: 48px;
+}
+
+.signup-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 80%;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.signup-wrapper input {
+  font-size: 24px;
+  padding: 3px;
+  border-radius: 5px;
+  border: 1px solid black;
+  background-color: #353535;
+  color: #fff;
+}
+
+.signup-wrapper input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.signup-wrapper input:focus {
+  /* border-color: #66afe9;
+    box-shadow: 0 0 5px #66afe9; */
+}
+
+.buttons-wrapper button {
+  width: 100%;
+  border: none;
+  background-color: rgb(95, 143, 231);
+  height: 40px;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-size: 20px;
+  color: #fff;
+}
+
+.buttons-wrapper button:hover {
+  cursor: pointer;
+  background-color: rgb(71, 99, 224);
+}
+
+.switcher p {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.switcher {
+  display: flex;
+  justify-content: center;
+}
+
+.button-switcher {
+  cursor: pointer;
+  text-decoration: underline;
+  color: rgb(64, 137, 185);
+}
+
+.Toastify__toast-container .Toastify__toast {
+  background-color: #353535;
+  color: #fff;
+}
+
+.Toastify__close-button {
+  color: rgb(255, 255, 255) !important;
+}
