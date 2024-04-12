@@ -1,21 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const authRouter = require("./routes/auth.routes");
-// const mysqlConnection = require("./config/db.config");
-const mongoDBConnection = require("./config/mongoDB.config");
 const { connect } = require("./config/db.config");
-
-require("dotenv").config();
-
 const app = express();
-
-const port = process.env.PORT;
-
+require("dotenv").config();
 connect();
-
-// mysqlConnection.connect();
-
-mongoDBConnection.connect();
+const port = process.env.PORT;
 
 app.use(cors());
 app.use(express.json());

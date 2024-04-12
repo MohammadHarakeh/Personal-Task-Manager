@@ -5,7 +5,7 @@ import "./App.css";
 function App() {
   const testApi = async () => {
     try {
-      const response = await fetch("http://localhost:4000/auth/register", {
+      const response = await fetch("http://localhost:3000/auth/register", {
         method: "GET",
       });
 
@@ -24,7 +24,11 @@ function App() {
     testApi();
   }, []);
 
-  return <div>test</div>;
+  return (
+    <div>
+      <h1 className="text-3xl font-bold underline ">Hello world!</h1>
+    </div>
+  );
 }
 
 export default App;
