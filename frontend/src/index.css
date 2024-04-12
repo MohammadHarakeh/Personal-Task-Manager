@@ -1,5 +1,11 @@
+@font-face {
+  font-family: "Poppins-Regular";
+  src: url("./Fonts/Poppins-Regular.otf") format("truetype");
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Poppins-regular;
 }

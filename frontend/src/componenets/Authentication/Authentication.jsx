@@ -23,7 +23,7 @@ function Authentication() {
 
   const validateForm = () => {
     if (
-      !signupData.name ||
+      !signupData.username ||
       !signupData.email ||
       !signupData.password ||
       !signupData.confirmPassword
@@ -104,8 +104,7 @@ function Authentication() {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem("token", JSON.stringify(data.authorisation.token));
-        console.log(data);
+        localStorage.setItem("token", JSON.stringify(data.token));
         toast.success("Login successful");
         navigate("/homepage");
       } else {
