@@ -23,4 +23,27 @@ const createBoard = async (req, res) => {
   }
 };
 
-module.exports = { createBoard };
+const deleteBoard = async (req, res) => {
+  try {
+    const boardId = req.params.boardId;
+
+    const index = req.user.boards.findIndex(
+      (board) => board._id.toString() === boardId
+    );
+
+    if (index === -1) {
+      return res.status(404).json({ message: "Board not found" });
+    }
+
+    req.user.boards.splice(index, 1);
+
+    await req.user.save();
+
+    res.status(200).json({ message: "Board deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error", error: error });
+  }
+};
+
+module.exports = { createBoard, deleteBoard };
