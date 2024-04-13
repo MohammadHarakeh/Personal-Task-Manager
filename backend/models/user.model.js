@@ -7,7 +7,6 @@ const taskSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true,
   },
 });
 
@@ -19,19 +18,30 @@ const columnSchema = new mongoose.Schema({
   tasks: [taskSchema],
 });
 
-const boardSchema = new mongoose.Schema({
+const boardScheema = new mongoose.Schema({
   title: {
     type: String,
-    required: true,
+    require: true,
   },
   columns: [columnSchema],
 });
 
 const userSchema = new mongoose.Schema({
-  username: { type: String, unique: false, required: true },
-  email: { type: String, unique: true, required: true },
-  password: { type: String, required: true },
-  boards: [boardSchema],
+  username: {
+    type: String,
+    unique: false,
+    required: true,
+  },
+  email: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  boards: [boardScheema],
 });
 
 module.exports = mongoose.model("User", userSchema);
