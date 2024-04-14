@@ -36,7 +36,7 @@ function SignupForm({ register }) {
         type="password"
         onChange={(e) => {
           const change = updateInput({
-            key: "username",
+            key: "password",
             value: e.target.value,
           });
           dispatch(change);

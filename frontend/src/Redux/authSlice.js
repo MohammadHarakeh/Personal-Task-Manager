@@ -19,6 +19,7 @@ export const authSlice = createSlice({
 
     switchSignin: (state, action) => {
       Object.assign(state, initialState);
+      state.isLogin = true;
     },
 
     updateInput: (state, action) => {

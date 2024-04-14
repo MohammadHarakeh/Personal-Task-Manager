@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -15,7 +15,7 @@ import {
 const Authentication = () => {
   const { username, email, password, confirmPassword, isLogin } = useSelector(
     (global) => {
-      global[authSliceName];
+      return global[authSliceName];
     }
   );
 
@@ -129,9 +129,9 @@ const Authentication = () => {
           {isLogin ? <p>Signup now</p> : <p>Login</p>}
         </div>
         {isLogin ? (
-          <SignupForm register={register} />
-        ) : (
           <SigninForm handleSignin={handleSignin} />
+        ) : (
+          <SignupForm register={register} />
         )}
 
         <div className="switcher">
@@ -139,7 +139,9 @@ const Authentication = () => {
             {isLogin ? "Don't have an account? " : "Already have an account? "}
             <span
               className="button-switcher"
-              onClick={() => dispatch(switchRegister())}
+              onClick={() => {
+                isLogin ? dispatch(switchRegister()) : dispatch(switchSignin());
+              }}
             >
               {isLogin ? " Sign up" : "Sign in"}
             </span>
