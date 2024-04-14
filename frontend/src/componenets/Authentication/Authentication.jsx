@@ -5,41 +5,37 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SignupForm from "./Forms/SignupForm";
 import SigninForm from "./Forms/SigninForm";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  authSliceName,
+  switchRegister,
+  switchSignin,
+} from "../../Redux/authSlice";
 
-function Authentication() {
-  const [isLogin, setIsLogin] = useState(false);
-  const [signupData, setSignupData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+const Authentication = () => {
+  const { username, email, password, confirmPassword, isLogin } = useSelector(
+    (global) => {
+      global[authSliceName];
+    }
+  );
 
-  const [signinData, setSigninData] = useState({
-    email: "",
-    password: "",
-  });
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const validateForm = () => {
-    if (
-      !signupData.username ||
-      !signupData.email ||
-      !signupData.password ||
-      !signupData.confirmPassword
-    ) {
+    if (!username || !email || !password || !confirmPassword) {
       toast.error("Please fill in all fields");
       return false;
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(signupData.email)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       toast.error("Please enter a valid email address");
       return false;
     }
-    if (signupData.password.length < 6) {
+    if (password.length < 6) {
       toast.error("Password must be at least 6 characters long");
       return false;
     }
-    if (signupData.password !== signupData.confirmPassword) {
+    if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return false;
     }
@@ -48,16 +44,16 @@ function Authentication() {
 
   const validateSigninForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!signinData.email && !signinData.password) {
+    if (!email && !password) {
       toast.error("please fill in both fields");
       return false;
-    } else if (!signinData.email) {
+    } else if (!email) {
       toast.error("please enter your email");
       return false;
-    } else if (!emailRegex.test(signinData.email)) {
+    } else if (!emailRegex.test(email)) {
       toast.error("Please enter a valid email address");
       return false;
-    } else if (!signinData.password) {
+    } else if (!password) {
       toast.error("please enter your password");
       return false;
     }
@@ -70,7 +66,12 @@ function Authentication() {
     try {
       const response = await fetch("http://localhost:3000/auth/register", {
         method: "POST",
-        body: JSON.stringify(signupData),
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          confirmPassword,
+        }),
         headers: {
           "Content-Type": "application/json",
         },
@@ -79,7 +80,7 @@ function Authentication() {
       if (response.ok) {
         console.log("User registered successfully");
         toast.success("User registered successfully");
-        setIsLogin(!isLogin);
+        dispatch(switchSignin());
       } else {
         console.log("Registration failed");
         toast.error("Registration failed");
@@ -96,7 +97,10 @@ function Authentication() {
     try {
       const response = await fetch("http://localhost:3000/auth/login", {
         method: "POST",
-        body: JSON.stringify(signinData),
+        body: JSON.stringify({
+          email,
+          password,
+        }),
         headers: {
           "Content-Type": "application/json",
         },
@@ -125,17 +129,9 @@ function Authentication() {
           {isLogin ? <p>Signup now</p> : <p>Login</p>}
         </div>
         {isLogin ? (
-          <SignupForm
-            signupData={signupData}
-            setSignupData={setSignupData}
-            register={register}
-          />
+          <SignupForm register={register} />
         ) : (
-          <SigninForm
-            handleSignin={handleSignin}
-            setSigninData={setSigninData}
-            signinData={signinData}
-          />
+          <SigninForm handleSignin={handleSignin} />
         )}
 
         <div className="switcher">
@@ -143,7 +139,7 @@ function Authentication() {
             {isLogin ? "Don't have an account? " : "Already have an account? "}
             <span
               className="button-switcher"
-              onClick={() => setIsLogin(!isLogin)}
+              onClick={() => dispatch(switchRegister())}
             >
               {isLogin ? " Sign up" : "Sign in"}
             </span>
@@ -152,6 +148,6 @@ function Authentication() {
       </div>
     </div>
   );
-}
+};
 
 export default Authentication;

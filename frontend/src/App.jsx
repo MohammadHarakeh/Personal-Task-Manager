@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
 
 import Authentication from "./componenets/Authentication/Authentication";
 import "./index.css";
+import { store } from "./Redux/store";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Authentication />}></Route>
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Authentication />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }
 

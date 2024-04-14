@@ -1,19 +1,28 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { updateInput } from "../../../Redux/authSlice";
 
-function SigninForm({ setSigninData, handleSignin, signinData }) {
+function SigninForm({ handleSignin }) {
+  const dispatch = useDispatch();
+
   return (
     <div className="signup-wrapper">
       <input
         placeholder="Email"
         onChange={(e) => {
-          setSigninData({ ...signinData, email: e.target.value });
+          const change = updateInput({ key: "email", value: e.target.value });
+          dispatch(change);
         }}
       ></input>
       <input
         placeholder="Password"
         type="password"
         onChange={(e) => {
-          setSigninData({ ...signinData, password: e.target.value });
+          const change = updateInput({
+            key: "password",
+            value: e.target.value,
+          });
+          dispatch(change);
         }}
       ></input>
 

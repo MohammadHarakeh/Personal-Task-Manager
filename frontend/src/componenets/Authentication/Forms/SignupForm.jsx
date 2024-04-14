@@ -1,6 +1,10 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { updateInput } from "../../../Redux/authSlice";
 
-function SignupForm({ signupData, setSignupData, register }) {
+function SignupForm({ register }) {
+  const dispatch = useDispatch();
+
   const handleSignup = () => {
     register();
   };
@@ -10,27 +14,43 @@ function SignupForm({ signupData, setSignupData, register }) {
       <input
         placeholder="Username"
         onChange={(e) => {
-          setSignupData({ ...signupData, username: e.target.value });
+          const change = updateInput({
+            key: "username",
+            value: e.target.value,
+          });
+          dispatch(change);
         }}
       ></input>
       <input
         placeholder="Email"
         onChange={(e) => {
-          setSignupData({ ...signupData, email: e.target.value });
+          const change = updateInput({
+            key: "email",
+            value: e.target.value,
+          });
+          dispatch(change);
         }}
       ></input>
       <input
         placeholder="Password"
         type="password"
         onChange={(e) => {
-          setSignupData({ ...signupData, password: e.target.value });
+          const change = updateInput({
+            key: "username",
+            value: e.target.value,
+          });
+          dispatch(change);
         }}
       ></input>
       <input
         placeholder="Confirm Password"
         type="password"
         onChange={(e) => {
-          setSignupData({ ...signupData, confirmPassword: e.target.value });
+          const change = updateInput({
+            key: "confirmPassword",
+            value: e.target.value,
+          });
+          dispatch(change);
         }}
       ></input>
 
