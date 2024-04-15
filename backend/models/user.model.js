@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const taskSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true,
   },
   description: {
     type: String,
@@ -13,7 +12,6 @@ const taskSchema = new mongoose.Schema({
 const columnSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true,
   },
   tasks: [taskSchema],
 });
