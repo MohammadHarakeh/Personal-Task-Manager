@@ -29,7 +29,14 @@ const Homepage = () => {
     <div className="homepage-wrapper">
       {isEditting && (
         <div className="blurred">
-          <input placeholder="test"></input>
+          <div className="editting-card">
+            <div className="editting-title">Title</div>
+            <input placeholder="test"></input>
+            <div className="editting-buttons">
+              <button>Confirm</button>
+              <button onClick={toggleIsEditting}>Close</button>
+            </div>
+          </div>
         </div>
       )}
       <div className="homepage-title">Personal Task Manager</div>
