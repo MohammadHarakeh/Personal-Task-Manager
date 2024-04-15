@@ -2,7 +2,7 @@ const User = require("../models/user.model");
 
 const createBoard = async (req, res) => {
   try {
-    const { title, columns } = req.body;
+    const { title } = req.body;
 
     if (!title) {
       return res
@@ -10,7 +10,10 @@ const createBoard = async (req, res) => {
         .json({ message: "Title is required for the board." });
     }
 
-    const board = { title, columns };
+    const board = {
+      title,
+      columns: [],
+    };
 
     req.user.boards.push(board);
 

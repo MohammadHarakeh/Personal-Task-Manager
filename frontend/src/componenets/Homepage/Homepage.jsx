@@ -3,26 +3,39 @@ import "./Homepage.css";
 
 const Homepage = () => {
   const [boardTitle, setBoardTitle] = useState("");
-  const [isEditting, setIsEditting] = useState(false);
+  const [isEditting, setIsEditing] = useState(false);
 
-  //   const createBoard = async () => {
-  //     const formData = new FormData();
-  //     formData.append;
+  const createBoard = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/board/createBoard", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        },
+        body: JSON.stringify({
+          title: boardTitle,
+        }),
+      });
 
-  //     try {
-  //       const response = await fetch("http://localhost:3000/board/createBoard", {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-  //         },
-  //       });
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
+      if (!response.ok) {
+        console.error("Failed to create board:", response.status);
+      } else {
+        console.log("Board created successfully");
+        setBoardTitle("");
+        setIsEditing(false);
+      }
+    } catch (error) {
+      console.log("Error creating board:", error.message);
+    }
+  };
 
   const toggleIsEditting = () => {
-    setIsEditting((prevIsEditing) => !prevIsEditing);
+    setIsEditing((prevIsEditing) => !prevIsEditing);
+  };
+
+  const handleTitleChange = (e) => {
+    setBoardTitle(e.target.value);
   };
 
   return (
@@ -31,9 +44,14 @@ const Homepage = () => {
         <div className="blurred">
           <div className="editting-card">
             <div className="editting-title">Title</div>
-            <input placeholder="test"></input>
+            <input
+              placeholder="Enter board title"
+              type="text"
+              value={boardTitle}
+              onChange={handleTitleChange}
+            ></input>
             <div className="editting-buttons">
-              <button>Confirm</button>
+              <button onClick={createBoard}>Confirm</button>
               <button onClick={toggleIsEditting}>Close</button>
             </div>
           </div>
@@ -44,6 +62,8 @@ const Homepage = () => {
         <p>Your Work</p>
         <button onClick={toggleIsEditting}>Create</button>
       </div>
+
+      <div className="board-card"></div>
     </div>
   );
 };
