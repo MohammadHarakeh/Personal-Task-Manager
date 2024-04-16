@@ -24,7 +24,7 @@ const boardScheema = new mongoose.Schema({
   columns: [columnSchema],
 });
 
-const userSchema = new mongoose.Schema({
+const userScheema = new mongoose.Schema({
   username: {
     type: String,
     unique: false,
@@ -42,4 +42,4 @@ const userSchema = new mongoose.Schema({
   boards: [boardScheema],
 });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userScheema);

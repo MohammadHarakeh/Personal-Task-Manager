@@ -1,4 +1,6 @@
 import { React, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { storeBoards, boardSliceName } from "../../Redux/boardSlice";
 import { sendRequest } from "../../tools/apiRequest";
 import { requestMethods } from "../../tools/apiRequestMethods";
 import "./Homepage.css";
@@ -6,7 +8,12 @@ import "./Homepage.css";
 const Homepage = () => {
   const [boardTitle, setBoardTitle] = useState("");
   const [isEditting, setIsEditing] = useState(false);
-  const [boards, setBoards] = useState([]);
+
+  const dispatch = useDispatch();
+
+  const boards = useSelector((global) => {
+    return global[boardSliceName].boards;
+  });
 
   const createBoard = async () => {
     try {
@@ -39,7 +46,8 @@ const Homepage = () => {
 
       if (response.status === 200) {
         console.log("Board fetched successfully", response.data.boards);
-        setBoards(response.data.boards);
+        const boards = storeBoards(response.data.boards);
+        dispatch(boards);
       } else {
         console.error("Failed to fetch boards");
       }
@@ -57,6 +65,7 @@ const Homepage = () => {
   };
 
   useEffect(() => {
+    console.log("Boards:", boards);
     getBoard();
   }, []);
 
