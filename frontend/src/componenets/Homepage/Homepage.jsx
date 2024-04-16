@@ -1,4 +1,6 @@
 import { React, useState } from "react";
+import { sendRequest } from "../../tools/apiRequest";
+import { requestMethods } from "../../tools/apiRequestMethods";
 import "./Homepage.css";
 
 const Homepage = () => {
@@ -7,26 +9,25 @@ const Homepage = () => {
 
   const createBoard = async () => {
     try {
-      const response = await fetch("http://localhost:3000/board/createBoard", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-        },
-        body: JSON.stringify({
-          title: boardTitle,
-        }),
+      const body = JSON.stringify({
+        title: boardTitle,
       });
 
-      if (!response.ok) {
-        console.error("Failed to create board:", response.status);
-      } else {
+      const response = await sendRequest(
+        requestMethods.POST,
+        `/board/createBoard`,
+        body
+      );
+
+      if (response.status === 201) {
         console.log("Board created successfully");
         setBoardTitle("");
         setIsEditing(false);
+      } else {
+        console.error("Failed to create board:", response.status);
       }
     } catch (error) {
-      console.log("Error creating board:", error.message);
+      console.log("Error creating board:", error);
     }
   };
 
