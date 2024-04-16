@@ -1,4 +1,5 @@
 import { React, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   storeBoards,
@@ -14,6 +15,7 @@ const Homepage = () => {
   const [isEditting, setIsEditing] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const boards = useSelector((global) => global[boardSliceName].boards);
 
@@ -101,9 +103,8 @@ const Homepage = () => {
             key={board._id}
             className="board-item"
             onClick={() => {
-              console.log(board._id);
-              const boardId = getBoardId(board._id);
-              dispatch(boardId);
+              dispatch(getBoardId(board._id));
+              navigate("/board");
             }}
           >
             <p>
