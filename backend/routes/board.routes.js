@@ -5,6 +5,11 @@ const authMiddleware = require("../middlewares/auth.middleware");
 
 router.post("/createBoard", authMiddleware, boardController.createBoard);
 router.get("/getBoard", authMiddleware, boardController.getBoard);
+router.get(
+  "/getTodoBoard/:boardId",
+  authMiddleware,
+  boardController.getTodoBoard
+);
 router.delete(
   "/deleteBoard/:boardId",
   authMiddleware,

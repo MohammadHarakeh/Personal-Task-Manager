@@ -43,8 +43,37 @@ const getBoard = async (req, res) => {
   }
 };
 
-const getSingleBoard = async (req, res) => {
+const getTodoBoard = async (req, res) => {
   try {
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const boardId = req.params.boardId;
+
+    const board = user.boards.find((board) => board._id.toString() === boardId);
+
+    if (!board) {
+      return res.status(404).json({ message: "Board not found" });
+    }
+
+    const todos = [];
+
+    board.columns.forEach((column) => {
+      if (
+        column.title === "To Do" ||
+        column.title === "In Progress" ||
+        column.title === "Done"
+      ) {
+        if (column.tasks && Array.isArray(column.tasks)) {
+          todos.push(...column.tasks);
+        }
+      }
+    });
+
+    res.status(200).json({ message: "Todos retrieved successfully", todos });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error", error: error });
@@ -74,4 +103,4 @@ const deleteBoard = async (req, res) => {
   }
 };
 
-module.exports = { createBoard, deleteBoard, getBoard };
+module.exports = { createBoard, deleteBoard, getBoard, getTodoBoard };
