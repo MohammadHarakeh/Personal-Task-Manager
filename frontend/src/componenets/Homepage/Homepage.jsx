@@ -11,9 +11,7 @@ const Homepage = () => {
 
   const dispatch = useDispatch();
 
-  const boards = useSelector((global) => {
-    return global[boardSliceName].boards;
-  });
+  const boards = useSelector((global) => global[boardSliceName].boards);
 
   const createBoard = async () => {
     try {
@@ -65,7 +63,6 @@ const Homepage = () => {
   };
 
   useEffect(() => {
-    console.log("Boards:", boards);
     getBoard();
   }, []);
 

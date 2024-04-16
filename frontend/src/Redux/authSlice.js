@@ -24,7 +24,8 @@ export const authSlice = createSlice({
 
     updateInput: (state, action) => {
       // return {
-      //   ...state, [action.payload.key]: action.payload.value
+      //   ...state,
+      //   [action.payload.key]: action.payload.value,
       // };
 
       const { key, value } = action.payload;

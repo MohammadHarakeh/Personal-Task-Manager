@@ -9,8 +9,10 @@ export const boardSlice = createSlice({
   name: "boardSlice",
   reducers: {
     storeBoards: (state, action) => {
-      const { key, value } = action.payload;
-      state[key] = value;
+      return {
+        ...state,
+        boards: [...action.payload],
+      };
     },
   },
 });
