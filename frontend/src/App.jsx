@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 
 import Authentication from "./componenets/Authentication/Authentication";
 import Homepage from "./componenets/Homepage/Homepage";
+import BoardCard from "./componenets/BoardCard/BoardCard";
 import "./index.css";
 import { store } from "./Redux/store";
 
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Authentication />}></Route>
           <Route path="/homepage" element={<Homepage />}></Route>
+          <Route path="/board" element={<BoardCard />}></Route>
         </Routes>
       </BrowserRouter>
     </Provider>

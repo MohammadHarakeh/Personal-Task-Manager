@@ -48,3 +48,25 @@
   transform: translate(-50%, -50%);
   background-color: rebeccapurple;
 }
+
+.board-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  background-color: red;
+}
+
+.board-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rebeccapurple;
+  width: auto;
+  padding: 2rem;
+  height: 5rem;
+  font-size: 1.5rem;
+}
+
+.board-item:hover {
+  cursor: pointer;
+}

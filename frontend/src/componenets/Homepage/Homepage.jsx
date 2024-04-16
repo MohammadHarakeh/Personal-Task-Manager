@@ -6,6 +6,7 @@ import "./Homepage.css";
 const Homepage = () => {
   const [boardTitle, setBoardTitle] = useState("");
   const [isEditting, setIsEditing] = useState(false);
+  const [boards, setBoards] = useState([]);
 
   const createBoard = async () => {
     try {
@@ -23,6 +24,7 @@ const Homepage = () => {
         console.log("Board created successfully");
         setBoardTitle("");
         setIsEditing(false);
+        getBoard();
       } else {
         console.error("Failed to create board:", response.status);
       }
@@ -37,6 +39,7 @@ const Homepage = () => {
 
       if (response.status === 200) {
         console.log("Board fetched successfully", response.data.boards);
+        setBoards(response.data.boards);
       } else {
         console.error("Failed to fetch boards");
       }
@@ -82,7 +85,21 @@ const Homepage = () => {
         <button onClick={toggleIsEditting}>Create</button>
       </div>
 
-      <div className="board-card"></div>
+      <div className="board-card">
+        {boards.map((board) => (
+          <div
+            key={board._id}
+            className="board-item"
+            onClick={() => {
+              console.log(board._id);
+            }}
+          >
+            <p>
+              <b>Title:</b> {board.title}
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

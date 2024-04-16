@@ -39,7 +39,15 @@ const getBoard = async (req, res) => {
     res.status(200).json({ message: "Baords retrieved successfully", boards });
   } catch (error) {
     console.log(error);
-    res.stsuas(500).json({ message: "Internal server error", error: error });
+    res.status(500).json({ message: "Internal server error", error: error });
+  }
+};
+
+const getSingleBoard = async (req, res) => {
+  try {
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error", error: error });
   }
 };
 

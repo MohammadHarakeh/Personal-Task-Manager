@@ -1,0 +1,30 @@
+.main-title {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.board-title {
+  width: 100%;
+}
+
+.card-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: red;
+  width: 100%;
+  height: auto;
+  padding: 1rem;
+  margin-top: 0.5rem;
+}
+
+.card-information {
+  background-color: rebeccapurple;
+  padding: 0.5rem;
+}
+
+.board-container {
+  display: flex;
+  flex: 1;
+}
