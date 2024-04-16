@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { sendRequest } from "../../tools/apiRequest";
 import { requestMethods } from "../../tools/apiRequestMethods";
 import "./Homepage.css";
@@ -31,6 +31,20 @@ const Homepage = () => {
     }
   };
 
+  const getBoard = async () => {
+    try {
+      const response = await sendRequest(requestMethods.GET, `/board/getBoard`);
+
+      if (response.status === 200) {
+        console.log("Board fetched successfully", response.data.boards);
+      } else {
+        console.error("Failed to fetch boards");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const toggleIsEditting = () => {
     setIsEditing((prevIsEditing) => !prevIsEditing);
   };
@@ -38,6 +52,10 @@ const Homepage = () => {
   const handleTitleChange = (e) => {
     setBoardTitle(e.target.value);
   };
+
+  useEffect(() => {
+    getBoard();
+  }, []);
 
   return (
     <div className="homepage-wrapper">

@@ -4,6 +4,7 @@ const boardController = require("../controller/board.controller");
 const authMiddleware = require("../middlewares/auth.middleware");
 
 router.post("/createBoard", authMiddleware, boardController.createBoard);
+router.get("/getBoard", authMiddleware, boardController.getBoard);
 router.delete(
   "/deleteBoard/:boardId",
   authMiddleware,

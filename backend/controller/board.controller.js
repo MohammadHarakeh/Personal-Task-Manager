@@ -26,6 +26,23 @@ const createBoard = async (req, res) => {
   }
 };
 
+const getBoard = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const boards = user.boards;
+
+    res.status(200).json({ message: "Baords retrieved successfully", boards });
+  } catch (error) {
+    console.log(error);
+    res.stsuas(500).json({ message: "Internal server error", error: error });
+  }
+};
+
 const deleteBoard = async (req, res) => {
   try {
     const boardId = req.params.boardId;
@@ -49,4 +66,4 @@ const deleteBoard = async (req, res) => {
   }
 };
 
-module.exports = { createBoard, deleteBoard };
+module.exports = { createBoard, deleteBoard, getBoard };
