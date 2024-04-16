@@ -1,6 +1,10 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { storeBoards, boardSliceName } from "../../Redux/boardSlice";
+import {
+  storeBoards,
+  getBoardId,
+  boardSliceName,
+} from "../../Redux/boardSlice";
 import { sendRequest } from "../../tools/apiRequest";
 import { requestMethods } from "../../tools/apiRequestMethods";
 import "./Homepage.css";
@@ -98,6 +102,8 @@ const Homepage = () => {
             className="board-item"
             onClick={() => {
               console.log(board._id);
+              const boardId = getBoardId(board._id);
+              dispatch(boardId);
             }}
           >
             <p>
