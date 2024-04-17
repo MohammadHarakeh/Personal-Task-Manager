@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { boardSliceName } from "../../Redux/boardSlice";
 import "./BoardCard.css";
@@ -6,6 +6,7 @@ import { sendRequest } from "../../tools/apiRequest";
 import { requestMethods } from "../../tools/apiRequestMethods";
 
 const BoardCard = () => {
+  const [boardData, setBoardData] = useState([]);
   const selectedId = useSelector((global) => global[boardSliceName].selectedId);
 
   const getBoardCards = async () => {
@@ -17,6 +18,7 @@ const BoardCard = () => {
 
       if (response.status === 200) {
         console.log("Board fetched successfully", response.data);
+        setBoardData(response.data.todos);
       } else {
         console.error("Failed to fetch board");
       }
@@ -29,57 +31,22 @@ const BoardCard = () => {
     getBoardCards();
   }, []);
 
+  console.log(boardData);
+
   return (
     <div>
       <h1 className="main-title">Title</h1>
       <div className="board-container">
-        <div className="card-section">
-          <h2>To Do</h2>
-          <div className="card-information">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
-              tempore veniam id libero distinctio vitae blanditiis, error
-              corrupti molestias quae odit nam porro? Minus vel quisquam iste
-              similique reiciendis temporibus?
-            </p>
+        {boardData.map((section) => (
+          <div key={section._id} className="card-section">
+            <h2>{section.title}</h2>
+            <div className="card-information">
+              {section.cards.map((card) => (
+                <p key={card._id}>{card.text}</p>
+              ))}
+            </div>
           </div>
-        </div>
-
-        <div className="card-section">
-          <h2>To Do</h2>
-          <div className="card-information">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
-              tempore veniam id libero distinctio vitae blanditiis, error
-              corrupti molestias quae odit nam porro? Minus vel quisquam iste
-              similique reiciendis temporibus?
-            </p>
-          </div>
-        </div>
-
-        <div className="card-section">
-          <h2>To Do</h2>
-          <div className="card-information">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
-              tempore veniam id libero distinctio vitae blanditiis, error
-              corrupti molestias quae odit nam porro? Minus vel quisquam iste
-              similique reiciendis temporibus?
-            </p>
-          </div>
-        </div>
-
-        <div className="card-section">
-          <h2>To Do</h2>
-          <div className="card-information">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
-              tempore veniam id libero distinctio vitae blanditiis, error
-              corrupti molestias quae odit nam porro? Minus vel quisquam iste
-              similique reiciendis temporibus?
-            </p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

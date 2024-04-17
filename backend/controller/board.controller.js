@@ -32,6 +32,35 @@ const createBoard = async (req, res) => {
   }
 };
 
+const createTask = async (req, res) => {
+  const { boardId, columnId, title, description } = req.body;
+  try {
+    const user = await User.findById(req.user._id);
+
+    const board = user.boards.id(boardId);
+
+    const column = board.columns.id(columnId);
+
+    const newTask = {
+      title,
+      description,
+    };
+
+    column.tasks.push(newTask);
+
+    user.save();
+
+    const createdTask = column.tasks[column.tasks.length - 1];
+
+    return res.status(201).json({
+      message: "Task created successfully",
+      task: { columnId, ...createdTask._doc },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const getBoard = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
@@ -116,4 +145,5 @@ module.exports = {
   deleteBoard,
   getBoard,
   getTodoBoard,
+  createTask,
 };

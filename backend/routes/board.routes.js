@@ -9,7 +9,9 @@ router.get(
   authMiddleware,
   boardController.getTodoBoard
 );
+
 router.post("/createBoard", authMiddleware, boardController.createBoard);
+router.post("/addTask", authMiddleware, boardController.createTask);
 
 router.delete(
   "/deleteBoard/:boardId",
