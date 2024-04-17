@@ -60,6 +60,24 @@ const Homepage = () => {
     }
   };
 
+  const deleteBoard = async (boardId) => {
+    try {
+      const response = await sendRequest(
+        requestMethods.DELETE,
+        `/board/deleteBoard/${boardId}`
+      );
+
+      if (response.status === 200) {
+        console.log("Board deleted successfully", response.data.boards);
+        getBoard();
+      } else {
+        console.log("Failed to delete board");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const toggleIsEditting = () => {
     setIsEditing((prevIsEditing) => !prevIsEditing);
   };
@@ -99,16 +117,18 @@ const Homepage = () => {
 
       <div className="board-card">
         {boards.map((board) => (
-          <div
-            key={board._id}
-            className="board-item"
-            onClick={() => {
-              dispatch(getBoardId(board._id));
-              navigate("/board");
-            }}
-          >
-            <p>
+          <div key={board._id} className="board-item">
+            <p
+              className="enter-board"
+              onClick={() => {
+                dispatch(getBoardId(board._id));
+                navigate("/board");
+              }}
+            >
               <b>Title:</b> {board.title}
+            </p>
+            <p className="delete-button" onClick={() => deleteBoard(board._id)}>
+              delete
             </p>
           </div>
         ))}

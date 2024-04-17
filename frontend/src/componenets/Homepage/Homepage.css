@@ -53,7 +53,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
-  background-color: red;
+  background-color: rgb(171, 139, 139);
 }
 
 .board-item {
@@ -65,8 +65,30 @@
   padding: 2rem;
   height: 5rem;
   font-size: 1.5rem;
+  gap: 20px;
+}
+.enter-board {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: chartreuse;
+  cursor: pointer;
+  height: 5rem;
 }
 
-.board-item:hover {
+.enter-board:hover {
+  background-color: chocolate;
+}
+
+.delete-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: brown;
+  height: 5rem;
+}
+
+.delete-button:hover {
   cursor: pointer;
+  background-color: blue;
 }
