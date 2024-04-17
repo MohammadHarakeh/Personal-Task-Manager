@@ -46,9 +46,12 @@ const BoardCard = () => {
         body
       );
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         console.log("Task created successfully", response.data);
         getBoardCards();
+        setBoardTitle("");
+        setBoardDescription("");
+        setIsEditing(false);
       } else {
         console.error("Failed to add task");
       }
@@ -57,7 +60,8 @@ const BoardCard = () => {
     }
   };
 
-  const toggleIsEditting = () => {
+  const toggleIsEditing = (id) => {
+    setColumnId(id);
     setIsEditing((prevIsEditing) => !prevIsEditing);
   };
 
@@ -75,7 +79,6 @@ const BoardCard = () => {
 
   console.log("Column ID", columnId);
   console.log(selectedId);
-
   console.log(boardData);
 
   return (
@@ -98,7 +101,7 @@ const BoardCard = () => {
             ></input>
             <div className="editting-buttons">
               <button onClick={createTask}>Confirm</button>
-              <button onClick={toggleIsEditting}>Close</button>
+              <button onClick={() => toggleIsEditing(columnId)}>Close</button>
             </div>
           </div>
         </div>
@@ -106,11 +109,17 @@ const BoardCard = () => {
 
       <h1 className="main-title">Title</h1>
       <div className="board-container">
-        {boardData.map((column) => (
+        {boardData.map((column, index) => (
           <div key={column.title} className="card-section">
             <div className="title-wrapper">
               <h2>{column.title}</h2>
-              <button onClick={toggleIsEditting}>Add Task</button>
+              <button
+                onClick={() => {
+                  toggleIsEditing(column._id);
+                }}
+              >
+                Add Task
+              </button>
             </div>
             <div className="card-information">
               {column.cards.map((card, index) => (

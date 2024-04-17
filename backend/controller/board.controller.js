@@ -75,7 +75,6 @@ const createTask = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -115,23 +114,21 @@ const getTodoBoard = async (req, res) => {
     const todos = {
       title: board.title,
       description: board.description,
-      columns: [
-        { title: "To Do", cards: [] },
-        { title: "In Progress", cards: [] },
-        { title: "Done", cards: [] },
-      ],
-    };
-
-    board.columns.forEach((column) => {
-      const todoColumn = todos.columns.find(
-        (todo) => todo.title === column.title
-      );
-      if (todoColumn) {
-        todoColumn.cards = column.tasks.map((task) => ({
+      columns: board.columns.map((column) => ({
+        _id: column._id, // Include the column ID
+        title: column.title,
+        cards: column.tasks.map((task) => ({
           id: task._id,
           title: task.title,
           text: task.description,
-        }));
+        })),
+      })),
+    };
+
+    // If a column has no tasks, ensure it still appears in the response
+    todos.columns.forEach((column) => {
+      if (column.cards.length === 0) {
+        column.cards = [];
       }
     });
 
