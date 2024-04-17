@@ -27,15 +27,19 @@ const BoardCard = () => {
     }
   };
 
-  // const createTask = async ()=>{
-  //   try {
+  const createTask = async () => {
+    try {
+      const response = await sendRequest(requestMethods.POST, `/board/addTask`);
 
-  //     const
-
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
+      if (response.status === 200) {
+        console.log("Task created successfully", response.data);
+      } else {
+        console.error("Failed to add task");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     getBoardCards();

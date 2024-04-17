@@ -34,12 +34,29 @@ const createBoard = async (req, res) => {
 
 const createTask = async (req, res) => {
   const { boardId, columnId, title, description } = req.body;
+
+  if (!boardId || !columnId || !title || !description) {
+    return res.status(400).json({ message: "Missing required parameters" });
+  }
+
   try {
     const user = await User.findById(req.user._id);
 
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
     const board = user.boards.id(boardId);
 
+    if (!board) {
+      return res.status(404).json({ message: "Board not found" });
+    }
+
     const column = board.columns.id(columnId);
+
+    if (!column) {
+      return res.status(404).json({ message: "Column not found" });
+    }
 
     const newTask = {
       title,
@@ -58,6 +75,7 @@ const createTask = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
