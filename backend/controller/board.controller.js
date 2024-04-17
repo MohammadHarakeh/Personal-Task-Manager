@@ -65,18 +65,19 @@ const getTodoBoard = async (req, res) => {
       return res.status(404).json({ message: "Board not found" });
     }
 
-    const todos = [];
+    const todos = [
+      { title: "To Do", cards: [] },
+      { title: "In Progress", cards: [] },
+      { title: "Done", cards: [] },
+    ];
 
     board.columns.forEach((column) => {
-      if (
-        column.title === "To Do" ||
-        column.title === "In Progress" ||
-        column.title === "Done"
-      ) {
-        if (!Array.isArray(column.tasks)) {
-          column.tasks = [];
-        }
-        todos.push(...column.tasks);
+      const todoColumn = todos.find((todo) => todo.title === column.title);
+      if (todoColumn) {
+        todoColumn.cards = column.tasks.map((task) => ({
+          id: task._id,
+          text: task.title,
+        }));
       }
     });
 

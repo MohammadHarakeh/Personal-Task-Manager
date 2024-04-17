@@ -27,4 +27,5 @@
 .board-container {
   display: flex;
   flex: 1;
+  gap: 50px;
 }
