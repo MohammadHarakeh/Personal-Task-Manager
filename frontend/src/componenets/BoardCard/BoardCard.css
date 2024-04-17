@@ -9,19 +9,37 @@
 
 .card-section {
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: red;
+  background-color: rgb(255, 0, 208);
   width: 100%;
   height: auto;
   padding: 1rem;
   margin-top: 0.5rem;
+  font-size: 2rem;
 }
 
 .card-information {
-  background-color: rebeccapurple;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   padding: 0.5rem;
+}
+.individual-cards {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(187, 255, 0);
+}
+
+.individual-title {
+  font-size: 2rem;
+}
+
+.individual-text {
+  font-size: 1.5rem;
+  padding: 10px;
 }
 
 .board-container {

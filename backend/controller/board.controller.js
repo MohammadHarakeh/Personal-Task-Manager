@@ -71,7 +71,7 @@ const getBoard = async (req, res) => {
 
     const boards = user.boards;
 
-    res.status(200).json({ message: "Baords retrieved successfully", boards });
+    res.status(200).json({ message: "Boards retrieved successfully", boards });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error", error: error });
@@ -94,18 +94,25 @@ const getTodoBoard = async (req, res) => {
       return res.status(404).json({ message: "Board not found" });
     }
 
-    const todos = [
-      { title: "To Do", cards: [] },
-      { title: "In Progress", cards: [] },
-      { title: "Done", cards: [] },
-    ];
+    const todos = {
+      title: board.title,
+      description: board.description,
+      columns: [
+        { title: "To Do", cards: [] },
+        { title: "In Progress", cards: [] },
+        { title: "Done", cards: [] },
+      ],
+    };
 
     board.columns.forEach((column) => {
-      const todoColumn = todos.find((todo) => todo.title === column.title);
+      const todoColumn = todos.columns.find(
+        (todo) => todo.title === column.title
+      );
       if (todoColumn) {
         todoColumn.cards = column.tasks.map((task) => ({
           id: task._id,
-          text: task.title,
+          title: task.title,
+          text: task.description,
         }));
       }
     });
