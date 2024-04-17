@@ -10,9 +10,15 @@ const createBoard = async (req, res) => {
         .json({ message: "Title is required for the board." });
     }
 
+    const defaultColumns = [
+      { title: "To Do", tasks: [] },
+      { title: "In Progress", tasks: [] },
+      { title: "Done", tasks: [] },
+    ];
+
     const board = {
       title,
-      columns: [],
+      columns: defaultColumns,
     };
 
     req.user.boards.push(board);
@@ -67,9 +73,10 @@ const getTodoBoard = async (req, res) => {
         column.title === "In Progress" ||
         column.title === "Done"
       ) {
-        if (column.tasks && Array.isArray(column.tasks)) {
-          todos.push(...column.tasks);
+        if (!Array.isArray(column.tasks)) {
+          column.tasks = [];
         }
+        todos.push(...column.tasks);
       }
     });
 
@@ -103,4 +110,9 @@ const deleteBoard = async (req, res) => {
   }
 };
 
-module.exports = { createBoard, deleteBoard, getBoard, getTodoBoard };
+module.exports = {
+  createBoard,
+  deleteBoard,
+  getBoard,
+  getTodoBoard,
+};
