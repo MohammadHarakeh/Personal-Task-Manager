@@ -41,11 +41,12 @@
   width: 100%;
   height: 100vh;
   background-color: rgba(128, 128, 128, 0.5);
+  font-size: 2rem;
 }
 
 .editting-card {
   position: fixed;
-  width: 30%;
+  width: 40%;
   top: 50%;
   left: 50%;
   display: flex;
@@ -53,7 +54,39 @@
   flex-direction: column;
   align-items: center;
   transform: translate(-50%, -50%);
-  background-color: rebeccapurple;
+  background-color: rgb(87, 87, 87);
+}
+
+.editting-title {
+  margin: 1rem;
+}
+
+.editting-card input {
+  width: 80%;
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  margin: 1rem;
+}
+
+.editting-buttons {
+  display: flex;
+  margin: 2rem;
+  gap: 20px;
+}
+
+.editting-buttons button {
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+  background-color: red;
+  border-radius: 10px;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: #fff;
+}
+
+.editting-buttons button:hover {
+  background-color: rgb(112, 0, 0);
 }
 
 .board-card {

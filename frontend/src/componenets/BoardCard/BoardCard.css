@@ -19,6 +19,25 @@
   font-size: 2rem;
 }
 
+.title-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.title-wrapper button {
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  background-color: red;
+  margin-bottom: 1rem;
+}
+
+.title-wrapper button:hover {
+  cursor: pointer;
+  background-color: rgb(129, 0, 0);
+}
+
 .card-information {
   display: flex;
   flex-direction: column;

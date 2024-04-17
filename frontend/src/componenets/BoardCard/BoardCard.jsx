@@ -7,6 +7,10 @@ import { requestMethods } from "../../tools/apiRequestMethods";
 
 const BoardCard = () => {
   const [boardData, setBoardData] = useState([]);
+  const [boardTitle, setBoardTitle] = useState("");
+  const [boardDescription, setBoardDescription] = useState("");
+  const [columnId, setColumnId] = useState("");
+  const [isEditting, setIsEditing] = useState(false);
   const selectedId = useSelector((global) => global[boardSliceName].selectedId);
 
   const getBoardCards = async () => {
@@ -29,10 +33,22 @@ const BoardCard = () => {
 
   const createTask = async () => {
     try {
-      const response = await sendRequest(requestMethods.POST, `/board/addTask`);
+      const body = JSON.stringify({
+        boardId: selectedId,
+        columnId: columnId,
+        title: boardTitle,
+        description: boardDescription,
+      });
+
+      const response = await sendRequest(
+        requestMethods.POST,
+        `/board/addTask`,
+        body
+      );
 
       if (response.status === 200) {
         console.log("Task created successfully", response.data);
+        getBoardCards();
       } else {
         console.error("Failed to add task");
       }
@@ -41,28 +57,68 @@ const BoardCard = () => {
     }
   };
 
+  const toggleIsEditting = () => {
+    setIsEditing((prevIsEditing) => !prevIsEditing);
+  };
+
+  const handleTitleChange = (e) => {
+    setBoardTitle(e.target.value);
+  };
+
+  const handleDescriptionChange = (e) => {
+    setBoardDescription(e.target.value);
+  };
+
   useEffect(() => {
     getBoardCards();
   }, []);
+
+  console.log("Column ID", columnId);
+  console.log(selectedId);
 
   console.log(boardData);
 
   return (
     <div>
+      {isEditting && (
+        <div className="blurred">
+          <div className="editting-card">
+            <div className="editting-title">Title</div>
+            <input
+              placeholder="Enter board title"
+              type="text"
+              value={boardTitle}
+              onChange={handleTitleChange}
+            ></input>
+            <input
+              placeholder="Enter board description"
+              type="text"
+              value={boardDescription}
+              onChange={handleDescriptionChange}
+            ></input>
+            <div className="editting-buttons">
+              <button onClick={createTask}>Confirm</button>
+              <button onClick={toggleIsEditting}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <h1 className="main-title">Title</h1>
       <div className="board-container">
         {boardData.map((column) => (
           <div key={column.title} className="card-section">
-            <h2>{column.title}</h2>
+            <div className="title-wrapper">
+              <h2>{column.title}</h2>
+              <button onClick={toggleIsEditting}>Add Task</button>
+            </div>
             <div className="card-information">
-              {column.cards.map((card) => (
-                <div key={card.id} className="individual-cards">
-                  <p key={card.id} className="individual-title">
+              {column.cards.map((card, index) => (
+                <div key={`${index}`} className="individual-cards">
+                  <p className="individual-title">
                     <b>{card.title}</b>
                   </p>
-                  <p key={card.id} className="individual-text">
-                    {card.text}
-                  </p>
+                  <p className="individual-text">{card.text}</p>
                 </div>
               ))}
             </div>
