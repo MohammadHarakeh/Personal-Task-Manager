@@ -125,7 +125,6 @@ const getTodoBoard = async (req, res) => {
       })),
     };
 
-    // If a column has no tasks, ensure it still appears in the response
     todos.columns.forEach((column) => {
       if (column.cards.length === 0) {
         column.cards = [];
