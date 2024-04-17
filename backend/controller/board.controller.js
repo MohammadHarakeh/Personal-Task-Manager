@@ -115,7 +115,7 @@ const getTodoBoard = async (req, res) => {
       title: board.title,
       description: board.description,
       columns: board.columns.map((column) => ({
-        _id: column._id, // Include the column ID
+        _id: column._id,
         title: column.title,
         cards: column.tasks.map((task) => ({
           id: task._id,

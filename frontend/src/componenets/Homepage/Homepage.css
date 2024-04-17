@@ -36,6 +36,11 @@
   font-size: 20px;
 }
 
+.work-title button:hover {
+  background-color: rgb(122, 0, 0);
+  cursor: pointer;
+}
+
 .blurred {
   position: absolute;
   width: 100%;

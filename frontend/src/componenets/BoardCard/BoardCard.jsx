@@ -4,6 +4,8 @@ import { boardSliceName } from "../../Redux/boardSlice";
 import "./BoardCard.css";
 import { sendRequest } from "../../tools/apiRequest";
 import { requestMethods } from "../../tools/apiRequestMethods";
+import { useDrag, useDrop, DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 const BoardCard = () => {
   const [boardData, setBoardData] = useState([]);
@@ -76,10 +78,6 @@ const BoardCard = () => {
   useEffect(() => {
     getBoardCards();
   }, []);
-
-  console.log("Column ID", columnId);
-  console.log(selectedId);
-  console.log(boardData);
 
   return (
     <div>
